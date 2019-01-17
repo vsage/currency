@@ -4,5 +4,21 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.9-browsers
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/mcs-naster360
+
     steps:
       - checkout
+      - restore_cache:
+          key: mcs-angular-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: cd ~/mcs-naster360/mcs-angular && npm install
+      - save_cache:
+          key: mcs-angular-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+             - "node_modules"
+      - run: cd ~/mcs-naster360/mcs-angular && npm run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI
