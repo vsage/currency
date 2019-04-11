@@ -13,3 +13,4 @@ Run `npm start` and check you console on localhost:3000
 
 Information contained in lib/example.js
 Methods are in lib/helpers.js
+Comments welcome
